@@ -4,10 +4,14 @@
 .vs/
 
 # CMake stuff
+build/
 CMakeFiles/
 cmake_install.cmake
 CMakeCache.txt
 Makefile
 
-# Executables
+# Binaries
+*.a
+*.dll
+*.exe
 ComputePipelineTest
