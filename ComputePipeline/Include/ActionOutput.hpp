@@ -1,34 +1,48 @@
 #pragma once
 
-#include <cstdint>
-#include <vector>
-
 class RawBytesOutput;
 class ImageOutput;
 class JsonOutput;
 
-class ActionOutput {
+/// Abstract class representing an output type of a compute pipeline action.
+/// Provides functions that let you access the concrete type of action output.
+class ActionOutput
+{
 public:
+    /// Returns: Pointer to self as `RawBytesOutput` or `nullptr` if the actual type is different.
     virtual const RawBytesOutput* as_raw_bytes() const { return nullptr; }
+
+    /// Returns: Pointer to self as `ImageOutput` or `nullptr` if the actual type is different.
     virtual const ImageOutput* as_image() const { return nullptr; }
+    
+    /// Returns: Pointer to self as `JsonOutput` or `nullptr` if the actual type is different.
     virtual const JsonOutput* as_json() const { return nullptr; }
+
+protected:
+    ActionOutput() = default;
 };
 
-class RawBytesOutput : public ActionOutput {
+/// Stores raw data as an array of bytes.
+class RawBytesOutput : public ActionOutput
+{
 public:
-    std::vector<uint8_t> bytes;
+    // Raw binary data here
 
     virtual const RawBytesOutput* as_raw_bytes() const override { return this; }
 };
 
-struct ImageOutput : public ActionOutput {
+/// Stores image data as an array of colours.
+struct ImageOutput : public ActionOutput
+{
 public:
     // Image data here
 
     virtual const ImageOutput* as_image() const override { return this; }
 };
 
-struct JsonOutput : public ActionOutput {
+/// Stores a JSON object.
+struct JsonOutput : public ActionOutput
+{
 public:
     // Json object data here
 

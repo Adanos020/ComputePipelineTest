@@ -2,11 +2,13 @@
 
 #include <Action.hpp>
 
-#include <string_view>
-
-class ActionParseJson : public Action {
+/// Compute pipeline action which parses a JSON string stored in the previous action's output.
+/// 
+/// Expected input: `RawBytesOutput` storing the JSON string.
+/// 
+/// Output: `JsonOutput`.
+class ActionParseJson : public Action
+{
 public:
-    std::string_view json_str;
-
     virtual std::optional<std::shared_ptr<ActionOutput>> execute(const ActionOutput* previous_output) override;
 };

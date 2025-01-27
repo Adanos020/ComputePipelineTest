@@ -4,7 +4,13 @@
 
 #include <filesystem>
 
-class ActionLoadFromFile : public Action {
+/// Compute pipeline action which loads data from a file on disk.
+/// 
+/// Expected input: `RawBytesOutput` storing the file path.
+/// 
+/// Output: `RawBytesOutput` with the contents of the loaded file.
+class ActionLoadFromFile : public Action
+{
 public:
     std::filesystem::path file_path;
 

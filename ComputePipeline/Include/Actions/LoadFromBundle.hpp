@@ -4,7 +4,13 @@
 
 #include <filesystem>
 
-class ActionLoadFromBundle : public Action {
+/// Compute pipeline action which loads data from an application bundle.
+/// 
+/// Expected input: `RawBytesOutput` storing the path to the bundle.
+/// 
+/// Output: `RawBytesOutput` with the contents of the loaded bundle.
+class ActionLoadFromBundle : public Action
+{
 public:
     std::filesystem::path bundle_path;
 

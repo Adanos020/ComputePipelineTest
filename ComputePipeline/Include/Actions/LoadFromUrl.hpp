@@ -4,7 +4,13 @@
 
 #include <string_view>
 
-class ActionLoadFromUrl : public Action {
+/// Compute pipeline action which loads data from a resource at a given URL.
+/// 
+/// Expected input: `RawBytesOutput` storing the URL of the bundle.
+/// 
+/// Output: `RawBytesOutput` with the contents of the loaded resource.
+class ActionLoadFromUrl : public Action
+{
 public:
     std::string_view url;
 

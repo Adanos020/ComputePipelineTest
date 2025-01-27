@@ -9,7 +9,7 @@
 int main() {
     auto pipeline = ComputePipeline::load("https://www.my-cosy-domain.com/files/compressed_image.zip");
     if (!pipeline) {
-        std::println("Failed to execute the pipeline");
+        std::println("Failed to create the pipeline");
         return 1;
     }
     
