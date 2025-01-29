@@ -2,10 +2,9 @@
 
 This is my implementation of a coding exercise I got at a job interview.
 
-The goal was to implement a compute pipeline in C++.
+The goal was to implement a compute pipeline in C++. I focused on making the library easy to use and extend with additional actions.
 
-I focused on making the library easy to use and extend with additional actions.
-
+The `master` branch contains what I've come up within the 4-hour time limit. Upon further consideration, I created an [`improvements`](https://github.com/Adanos020/ComputePipelineTest/tree/improvements) branch where I've made changes I would have made if given more time.
 
 ## How to build
 
