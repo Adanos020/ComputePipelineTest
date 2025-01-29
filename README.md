@@ -37,21 +37,24 @@ Lastly, in order to run the pipeline, all you need to do is call the `execute()`
 
 Example:
 ```c++
-std::optional<ComputePipeline> pipeline = ComputePipeline::load("https://www.my-cosy-domain.com/files/compressed_image.zip");
-if (!pipeline) {
-    std::println("Failed to create the pipeline");
-    return 1;
-}
+auto image = ComputePipeline::load("https://www.my-cosy-domain.com/files/compressed_image.zip")
+    .and_then([](ComputePipeline&& pipeline) {
+        return pipeline
+            .add_action<ActionDecompressData>()
+            .add_action<ActionDecodeImage>()
+            .execute();
+    })
+    .and_then([](ActionOutput&& output) {
+        const ImageOutput* image_data = output.as<ImageOutput>();
+        return std::optional(image_data);
+    });
 
-pipeline->add_action<ActionDecompressData>();
-pipeline->add_action<ActionDecodeImage>();
-
-std::optional<std::shared_ptr<ActionOutput>> output = pipeline->execute();
-if (!output) {
+if (image.has_value()) {
+    assert(image.value() != nullptr);
     std::println("Failed to execute the pipeline");
     return 1;
+} else {
+    std::println("Success!");
+    return 0;
 }
-
-const ImageOutput* image_data = (*output)->as_image();
-assert(image_data);
 ```

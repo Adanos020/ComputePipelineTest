@@ -10,5 +10,5 @@
 class ActionParseJson : public Action
 {
 public:
-    virtual std::optional<std::shared_ptr<ActionOutput>> execute(const ActionOutput* previous_output) override;
+    virtual std::optional<ActionOutput> execute(const std::optional<ActionOutput>& previous_output) override;
 };

@@ -66,7 +66,7 @@ public:
     /// Runs and consumes all the scheduled actions sequentially, from first to last.
     ///
     /// Returns: Optional output of the last action. If any step in the pipeline fails, nullopt is returned.
-    std::optional<std::shared_ptr<ActionOutput>> execute();
+    std::optional<ActionOutput> execute();
 
 private:
     ComputePipeline() = default;

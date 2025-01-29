@@ -7,24 +7,24 @@
 #include <print>
 
 int main() {
-    auto pipeline = ComputePipeline::load("https://www.my-cosy-domain.com/files/compressed_image.zip");
-    if (!pipeline) {
-        std::println("Failed to create the pipeline");
-        return 1;
-    }
+    auto image = ComputePipeline::load("https://www.my-cosy-domain.com/files/compressed_image.zip")
+        .and_then([](ComputePipeline&& pipeline) {
+            return pipeline
+                .add_action<ActionDecompressData>()
+                .add_action<ActionDecodeImage>()
+                .execute();
+        })
+        .and_then([](ActionOutput&& output) {
+            const ImageOutput* image_data = output.as<ImageOutput>();
+            return std::optional(image_data);
+        });
     
-    std::optional<std::shared_ptr<ActionOutput>> output = pipeline
-        ->add_action<ActionDecompressData>()
-        .add_action<ActionDecodeImage>()
-        .execute();
-    if (!output) {
+    if (image.has_value()) {
+        assert(image.value() != nullptr);
         std::println("Failed to execute the pipeline");
         return 1;
+    } else {
+        std::println("Success!");
+        return 0;
     }
-    const ImageOutput* image_data = (*output)->as<ImageOutput>();
-    assert(image_data);
-
-    std::println("Success!");
-    
-    return 0;
 }

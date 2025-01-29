@@ -30,14 +30,14 @@ std::optional<ComputePipeline> ComputePipeline::load(std::string_view resource_u
     return pipeline;
 }
 
-std::optional<std::shared_ptr<ActionOutput>> ComputePipeline::execute()
+std::optional<ActionOutput> ComputePipeline::execute()
 {
-    std::shared_ptr<ActionOutput> last_action_output = nullptr;
+    std::optional<ActionOutput> last_action_output;
     while (!this->action_queue.empty()) {
         std::unique_ptr<Action>& action = this->action_queue.front();
         
-        if (std::optional<std::shared_ptr<ActionOutput>> output = action->execute(last_action_output.get())) {
-            last_action_output = std::move(*output);
+        if (std::optional<ActionOutput> output = action->execute(last_action_output)) {
+            last_action_output = std::move(output);
         } else {
             return std::nullopt;
         }
