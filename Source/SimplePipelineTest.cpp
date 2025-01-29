@@ -21,7 +21,7 @@ int main() {
         std::println("Failed to execute the pipeline");
         return 1;
     }
-    const ImageOutput* image_data = (*output)->as_image();
+    const ImageOutput* image_data = (*output)->as<ImageOutput>();
     assert(image_data);
 
     std::println("Success!");

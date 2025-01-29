@@ -1,5 +1,7 @@
 #pragma once
 
+#include <concepts>
+
 class RawBytesOutput;
 class ImageOutput;
 class JsonOutput;
@@ -9,14 +11,13 @@ class JsonOutput;
 class ActionOutput
 {
 public:
-    /// Returns: Pointer to self as `RawBytesOutput` or `nullptr` if the actual type is different.
-    virtual const RawBytesOutput* as_raw_bytes() const { return nullptr; }
-
-    /// Returns: Pointer to self as `ImageOutput` or `nullptr` if the actual type is different.
-    virtual const ImageOutput* as_image() const { return nullptr; }
+    virtual ~ActionOutput() = default;
     
-    /// Returns: Pointer to self as `JsonOutput` or `nullptr` if the actual type is different.
-    virtual const JsonOutput* as_json() const { return nullptr; }
+    template <std::derived_from<ActionOutput> TyOutput>
+    const TyOutput* as() const
+    {
+        return dynamic_cast<const TyOutput*>(this);
+    }
 
 protected:
     ActionOutput() = default;
@@ -27,8 +28,6 @@ class RawBytesOutput : public ActionOutput
 {
 public:
     // Raw binary data here
-
-    virtual const RawBytesOutput* as_raw_bytes() const override { return this; }
 };
 
 /// Stores image data as an array of colours.
@@ -36,8 +35,6 @@ struct ImageOutput : public ActionOutput
 {
 public:
     // Image data here
-
-    virtual const ImageOutput* as_image() const override { return this; }
 };
 
 /// Stores a JSON object.
@@ -45,6 +42,4 @@ struct JsonOutput : public ActionOutput
 {
 public:
     // Json object data here
-
-    virtual const JsonOutput* as_json() const override { return this; }
 };

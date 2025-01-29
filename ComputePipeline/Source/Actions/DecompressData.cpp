@@ -10,7 +10,7 @@ std::optional<std::shared_ptr<ActionOutput>> ActionDecompressData::execute(const
         return std::nullopt;
     }
 
-    const RawBytesOutput* raw_json_data = previous_output->as_raw_bytes();
+    const RawBytesOutput* raw_json_data = previous_output->as<RawBytesOutput>();
     if (previous_output == nullptr) {
         return std::nullopt;
     }
