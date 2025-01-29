@@ -37,7 +37,7 @@ std::optional<std::shared_ptr<ActionOutput>> ComputePipeline::execute()
         std::unique_ptr<Action>& action = this->action_queue.front();
         
         if (std::optional<std::shared_ptr<ActionOutput>> output = action->execute(last_action_output.get())) {
-            last_action_output = *output;
+            last_action_output = std::move(*output);
         } else {
             return std::nullopt;
         }
