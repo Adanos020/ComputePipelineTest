@@ -53,5 +53,8 @@ if (auto pipeline_opt = ComputePipeline::load("https://www.my-cosy-domain.com/fi
             return 1;
         }
     }
+} else {
+    std::println("Failed to create the pipeline");
+    return 1;
 }
 ```

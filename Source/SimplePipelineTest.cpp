@@ -24,5 +24,8 @@ int main() {
                 return 1;
             }
         }
+    } else {
+        std::println("Failed to create the pipeline");
+        return 1;
     }
 }
