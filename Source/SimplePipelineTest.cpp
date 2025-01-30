@@ -15,14 +15,13 @@ int main() {
             .add_action<ActionDecodeImage>()
             .execute();
         if (output) {
-            if (const ImageOutput* image_data = output->as<ImageOutput>()) {
-                assert(image_data != nullptr);
-                std::println("Success!");
-                return 0;
-            } else {
-                std::println("Failed to execute the pipeline");
-                return 1;
-            }
+            const ImageOutput* image_data = output->as<ImageOutput>();
+            assert(image_data != nullptr);
+            std::println("Success!");
+            return 0;
+        } else {
+            std::println("Failed to execute the pipeline");
+            return 1;
         }
     } else {
         std::println("Failed to create the pipeline");

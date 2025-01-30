@@ -44,12 +44,11 @@ if (auto pipeline_opt = ComputePipeline::load("https://www.my-cosy-domain.com/fi
         .add_action<ActionDecodeImage>()
         .execute();
     if (output) {
-        if (const ImageOutput* image_data = output->as<ImageOutput>()) {
-            assert(image_data != nullptr);
-            std::println("Success!");
-        } else {
-            std::println("Failed to execute the pipeline");
-        }
+        const ImageOutput* image_data = output->as<ImageOutput>();
+        assert(image_data != nullptr);
+        std::println("Success!");
+    } else {
+        std::println("Failed to execute the pipeline");
     }
 } else {
     std::println("Failed to create the pipeline");
