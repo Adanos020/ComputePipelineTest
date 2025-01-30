@@ -14,7 +14,7 @@ std::shared_ptr<ActionOutput> ActionLoadFromUrl::execute(const ActionOutput* pre
         std::println("Loading resource from URL...");
         // TODO: use URL from previous_output
     } else {
-        std::println("Loading resource from URL: {}...", this->url);
+        std::println("Loading resource from URL: '{}'...", this->url);
         // TODO: use this->url
     }
     // TODO: implement actual loading of file data and return it as raw bytes.
