@@ -2,7 +2,7 @@
 
 #include <ActionOutput.hpp>
 
-#include <optional>
+#include <memory>
 
 /// Abstract class providing an interface for a compute pipeline action.
 class Action
@@ -14,5 +14,5 @@ public:
     /// If `previous_output` is `nullptr`, it will be ignored.
     /// 
     /// Returns an `ActionOutput` if the `Action` has succeeded, otherwise it returns `std::nullopt`.
-    virtual std::optional<ActionOutput> execute(const std::optional<ActionOutput>& previous_output) = 0;
+    virtual std::shared_ptr<ActionOutput> execute(const ActionOutput* previous_output) = 0;
 };

@@ -30,16 +30,18 @@ std::optional<ComputePipeline> ComputePipeline::load(std::string_view resource_u
     return pipeline;
 }
 
-std::optional<ActionOutput> ComputePipeline::execute()
+std::shared_ptr<ActionOutput> ComputePipeline::execute()
 {
-    std::optional<ActionOutput> last_action_output;
+    std::shared_ptr<ActionOutput> last_action_output;
     while (!this->action_queue.empty()) {
         std::unique_ptr<Action>& action = this->action_queue.front();
         
-        if (std::optional<ActionOutput> output = action->execute(last_action_output)) {
+        if (std::shared_ptr<ActionOutput> output = action->execute(last_action_output.get())) {
+            std::println("Action succeeded.");
             last_action_output = std::move(output);
         } else {
-            return std::nullopt;
+            std::println("Action failed! Pipeline aborted.");
+            return nullptr;
         }
         
         this->action_queue.pop();
@@ -48,6 +50,6 @@ std::optional<ActionOutput> ComputePipeline::execute()
     if (last_action_output) {
         return last_action_output;
     } else {
-        return std::nullopt;
+        return nullptr;
     }
 }

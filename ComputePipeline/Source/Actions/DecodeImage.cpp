@@ -2,18 +2,22 @@
 
 #include <ActionOutput.hpp>
 
+#include <memory>
 #include <print>
 
-std::optional<ActionOutput> ActionDecodeImage::execute(const std::optional<ActionOutput>& previous_output)
+std::shared_ptr<ActionOutput> ActionDecodeImage::execute(const ActionOutput* previous_output)
 {
-    return previous_output.and_then([](const ActionOutput& output) -> std::optional<ActionOutput> {
-        const RawBytesOutput* raw_image_data = output.as<RawBytesOutput>();
-        if (raw_image_data) {
+    if (previous_output != nullptr) {
+        if (const RawBytesOutput* raw_image_data = previous_output->as<RawBytesOutput>()) {
+            std::println("Decoding the image data...");
             // TODO: implement actual image decoding from the raw data here
-            std::println("Decoded the image data");
-            return ImageOutput();
+            return std::make_shared<ImageOutput>();
         } else {
-            return std::nullopt;
+            std::println("Failed to decode the image data.");
+            return nullptr;
         }
-    });
+    } else {
+        std::println("Raw image data to decode was not provided.");
+        return nullptr;
+    }
 }

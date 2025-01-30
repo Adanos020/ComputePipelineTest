@@ -2,19 +2,21 @@
 
 #include <ActionOutput.hpp>
 
-#include <optional>
 #include <print>
 
-std::optional<ActionOutput> ActionDecompressData::execute(const std::optional<ActionOutput>& previous_output)
+std::shared_ptr<ActionOutput> ActionDecompressData::execute(const ActionOutput* previous_output)
 {
-    return previous_output.and_then([](const ActionOutput& output) -> std::optional<ActionOutput> {
-        const RawBytesOutput* raw_data = output.as<RawBytesOutput>();
-        if (raw_data) {
+    std::println("Decompressing the data...");
+    if (previous_output != nullptr) {
+        if (const RawBytesOutput* raw_data = previous_output->as<RawBytesOutput>()) {
             // TODO: implement actual data decompression here
-            std::println("Decompressed the data");
-            return { RawBytesOutput() };
+            return std::make_shared<RawBytesOutput>();
         } else {
-            return std::nullopt;
+            std::println("Failed to decompress the data.");
+            return nullptr;
         }
-    });
+    } else {
+        std::println("Raw data to decompress was not provided.");
+        return nullptr;
+    }
 }

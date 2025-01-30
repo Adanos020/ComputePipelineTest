@@ -9,14 +9,14 @@ ActionLoadFromUrl::ActionLoadFromUrl(std::string_view url)
 {
 }
 
-std::optional<ActionOutput> ActionLoadFromUrl::execute(const std::optional<ActionOutput>& previous_output) {
-    if (previous_output) {
+std::shared_ptr<ActionOutput> ActionLoadFromUrl::execute(const ActionOutput* previous_output) {
+    if (previous_output != nullptr) {
+        std::println("Loading resource from URL...");
         // TODO: use URL from previous_output
-        std::println("Loaded resource from URL");
     } else {
-        // TODO: use this->bundle_path
-        std::println("Loaded resource from URL: {}", this->url);
+        std::println("Loading resource from URL: {}...", this->url);
+        // TODO: use this->url
     }
     // TODO: implement actual loading of file data and return it as raw bytes.
-    return RawBytesOutput();
+    return std::make_shared<RawBytesOutput>();
 }

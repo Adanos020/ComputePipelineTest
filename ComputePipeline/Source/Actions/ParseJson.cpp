@@ -4,16 +4,20 @@
 
 #include <print>
 
-std::optional<ActionOutput> ActionParseJson::execute(const std::optional<ActionOutput>& previous_output)
+std::shared_ptr<ActionOutput> ActionParseJson::execute(const ActionOutput* previous_output)
 {
-    return previous_output.and_then([](const ActionOutput& output) -> std::optional<ActionOutput> {
-        const RawBytesOutput* raw_image_data = output.as<RawBytesOutput>();
+    std::println("Parsing JSON data...");
+    if (previous_output != nullptr) {
+        const RawBytesOutput* raw_image_data = previous_output->as<RawBytesOutput>();
         if (raw_image_data) {
             // TODO: implement actual JSON parsing from the raw data here
-            std::println("Parsed JSON data");
-            return JsonOutput();
+            return std::make_shared<JsonOutput>();
         } else {
-            return std::nullopt;
+            std::println("Failed to get raw JSON data.");
+            return nullptr;
         }
-    });
+    } else {
+        std::println("Raw JSON data to parse was not provided.");
+        return nullptr;
+    }
 }
