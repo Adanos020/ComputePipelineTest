@@ -9,7 +9,8 @@ ActionLoadFromUrl::ActionLoadFromUrl(std::string_view url)
 {
 }
 
-std::shared_ptr<ActionOutput> ActionLoadFromUrl::execute(const ActionOutput* previous_output) {
+std::shared_ptr<ActionOutput> ActionLoadFromUrl::execute(const ActionOutput* previous_output)
+{
     if (previous_output != nullptr) {
         std::println("Loading resource from URL...");
         // TODO: use URL from previous_output

@@ -10,7 +10,8 @@ ActionLoadFromFile::ActionLoadFromFile(std::filesystem::path file_path)
 {
 }
 
-std::shared_ptr<ActionOutput> ActionLoadFromFile::execute(const ActionOutput* previous_output) {
+std::shared_ptr<ActionOutput> ActionLoadFromFile::execute(const ActionOutput* previous_output)
+{
     if (previous_output != nullptr) {
         std::println("Loading resource from file...");
         // TODO: use file path from previous_output

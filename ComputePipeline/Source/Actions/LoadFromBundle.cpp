@@ -10,7 +10,8 @@ ActionLoadFromBundle::ActionLoadFromBundle(std::filesystem::path bundle_path)
 {
 }
 
-std::shared_ptr<ActionOutput> ActionLoadFromBundle::execute(const ActionOutput* previous_output) {
+std::shared_ptr<ActionOutput> ActionLoadFromBundle::execute(const ActionOutput* previous_output)
+{
     if (previous_output != nullptr) {
         std::println("Loading resource from bundle...");
         // TODO: use bundle path from previous_output
