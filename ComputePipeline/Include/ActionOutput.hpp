@@ -31,14 +31,14 @@ public:
 };
 
 /// Stores image data as an array of colours.
-struct ImageOutput : public ActionOutput
+class ImageOutput : public ActionOutput
 {
 public:
     // Image data here
 };
 
 /// Stores a JSON object.
-struct JsonOutput : public ActionOutput
+class JsonOutput : public ActionOutput
 {
 public:
     // Json object data here
